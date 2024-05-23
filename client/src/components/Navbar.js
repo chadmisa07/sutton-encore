@@ -36,7 +36,9 @@ const Navbar = (props) => {
       <div>
         <div class="container mx-auto flex justify-between items-center">
           <div>
-            <Icon />
+            <Link to="/">
+              <Icon />
+            </Link>
           </div>
           <div>
             <div className="hidden sm:block">

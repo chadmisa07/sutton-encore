@@ -1,6 +1,7 @@
 import React from "react";
 import Icon from "../Icon";
 import AccountButton from "./AccountButton";
+import { Link } from "react-router-dom";
 
 const Navbar = (props) => {
   return (
@@ -9,7 +10,9 @@ const Navbar = (props) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <Icon />
+              <Link to="/">
+                <Icon />
+              </Link>
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4"></div>
