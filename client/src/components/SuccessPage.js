@@ -11,8 +11,8 @@ function SuccessPage() {
           Vous vous êtes abonné avec succès!
         </h1>
         <p className="text-lg mb-4 text-center">
-          Bagels Round Top vous souhaite la bienvenue! Votre abonnement à nos
-          bons bagels frais est matinenant activé. À bientôt!
+          Félicitations! Vous êtes maintenant un membre VIP de Sutton Encore!
+          Vanessa communiquera avec vous par texto pour les avantages VIP
         </p>
         <button
           className="bg-yellow-600 text-white py-2 px-4 rounded-md block mx-auto hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50"

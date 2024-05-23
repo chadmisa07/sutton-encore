@@ -83,7 +83,7 @@ app.use(express.json()); // receive form data
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
-const STRIPE_DOMAIN = `${process.env.APP_DOMAIN}\bagels`;
+const STRIPE_DOMAIN = `${process.env.APP_DOMAIN}\sutton-encore`;
 
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -530,7 +530,7 @@ app.post("/set-subscription", async (req, res) => {
 
     await sendMessage(
       tempUser.phone_number,
-      "Excellent! Vous êtes maintenant abonné à la livraison de bagels!"
+      "Félicitations! Vous êtes maintenant un membre VIP de Sutton Encore! Vanessa communiquera avec vous par texto pour les avantages VIP"
     );
 
     res.json({ subscriptionId: data.subscription, message: successMessage });
