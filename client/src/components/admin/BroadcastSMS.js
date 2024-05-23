@@ -3,11 +3,11 @@ import Alert from "../Alert";
 import { Button } from "@mui/material";
 import { sendPostRequest } from "../../utils";
 
-const DEFAULT_STATE = { route: "0", message: "", isUpdateStatus: false };
+const DEFAULT_STATE = { message: "" };
 
 function Form() {
   const [inputs, setInputs] = useState(DEFAULT_STATE);
-  const { route, message } = inputs;
+  const { message } = inputs;
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -65,7 +65,7 @@ function Form() {
                 variant="contained"
                 className="py-1 px-3 rounded-sm shadow-sm text-white"
                 onClick={submitForm}
-                disabled={!route || !message}
+                disabled={!message}
               >
                 Send
               </Button>

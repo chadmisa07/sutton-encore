@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Button,
-  Alert,
-  Checkbox,
-} from "@mui/material";
+import { TextField, Button, Alert, Checkbox } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 export const PACKS = [
@@ -224,28 +215,6 @@ const Form = ({
             </>
           )}
 
-          {isUpdate ? (
-            <>
-              <div className="mt-2 mb-4">
-                <FormControl fullWidth className="bg-white rounded-md">
-                  <InputLabel name="quantity-label">Itinéraire</InputLabel>
-                  <Select
-                    labelId="route-label"
-                    name="route_id"
-                    label="route"
-                    onChange={handleChange}
-                    value={route_id}
-                  >
-                    {routes.map((route) => (
-                      <MenuItem key={route.id} value={route.id}>
-                        {route.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </div>
-            </>
-          ) : null}
           <div className="flex justify-center">
             <Button
               type="submit"

@@ -246,7 +246,6 @@ app.post("/update-subscriber", verify, async (req, res) => {
     quantity,
     email,
     id,
-    route_id,
     subscription_id,
     customer_id,
     accept_sms_notification,
@@ -264,7 +263,6 @@ app.post("/update-subscriber", verify, async (req, res) => {
     quantity,
     updated_date: new Date(),
     email,
-    route_id,
     accept_sms_notification,
     accept_email_notification,
     street_name: formattedAddress.streetName,
@@ -273,52 +271,6 @@ app.post("/update-subscriber", verify, async (req, res) => {
   };
 
   try {
-    // get the user data saved from the db
-    const userData = await db
-      .promise()
-      .query("SELECT * FROM subscribers WHERE id = ?", [id]);
-
-    if (route_id && userData[0][0].route_id !== Number(route_id)) {
-      // query route for the actual delivery_day data
-      const route = await db
-        .promise()
-        .query(`SELECT delivery_day from routes WHERE id="${route_id}"`);
-
-      // retrieve the current subscription for the default_payment_method
-      const currentSubscription = await stripe.subscriptions.retrieve(
-        subscription_id
-      );
-
-      // fetch the price id
-      const prices = await stripe.prices.list({
-        lookup_keys: [`${quantity}`],
-        expand: ["data.product"],
-      });
-
-      // create new subscription for that has correct billing_cycle_anchor
-      const newSubscription = await stripe.subscriptions.create({
-        customer: customer_id,
-        default_payment_method: currentSubscription.default_payment_method,
-        billing_cycle_anchor: utils.getStartDay(route[0][0].delivery_day),
-        proration_behavior: "none",
-        items: [
-          {
-            price: prices.data[0].id,
-          },
-        ],
-      });
-
-      // update the db with the new subscription_id
-      await db
-        .promise()
-        .query(
-          `UPDATE subscribers SET subscription_id="${newSubscription.id}" WHERE id = "${id}" `
-        );
-
-      // cancel old subscription as its billing_cycle_anchor is not correct
-      await stripe.subscriptions.cancel(subscription_id);
-    }
-
     // update the subscribers data
     await db
       .promise()
@@ -371,31 +323,11 @@ app.post("/sendSMS", async (req, res) => {
 
 // Used for broadcasting sms to all of the subscribers in a specific route
 app.post("/broadcast-sms", verify, async (req, res) => {
-  const { route, message, isUpdateStatus } = req.body;
+  const { message } = req.body;
 
   const subscribers = await db
     .promise()
-    .query(
-      "SELECT * FROM subscribers WHERE route_id = ? AND status = '1' ORDER BY id DESC",
-      [route]
-    );
-
-  const routeData = await db
-    .promise()
-    .query("SELECT name FROM routes WHERE id = ?", [route]);
-
-  if (isUpdateStatus) {
-    await db
-      .promise()
-      .query(
-        "UPDATE subscribers SET delivery_status='2' WHERE route_id = ? AND status = '1'",
-        [route]
-      );
-
-    await db
-      .promise()
-      .query("UPDATE routes SET delivery_status='2' WHERE id = ?", [route]);
-  }
+    .query("SELECT * FROM subscribers WHERE status = '1' ORDER BY id DESC");
 
   if (subscribers[0].length) {
     try {
@@ -405,8 +337,7 @@ app.post("/broadcast-sms", verify, async (req, res) => {
 
       await sendMessage(numbers, message);
       res.status(200).json({
-        message: `You have successfully broadcast a text message to ${routeData[0][0].name}`,
-        route,
+        message: `You have successfully broadcast a text message to all the subscribers`,
       });
     } catch (error) {
       console.log("error >>>>>>>>>>>>", error);
@@ -414,7 +345,7 @@ app.post("/broadcast-sms", verify, async (req, res) => {
     }
   } else {
     res.status(400).json({
-      errMessage: "No subscribers in this route.",
+      errMessage: "No subscribers available for broadcast",
     });
   }
 });
