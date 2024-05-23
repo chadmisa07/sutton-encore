@@ -125,13 +125,6 @@ app.post("/login", async (req, res) => {
     .promise()
     .query("SELECT * FROM users where username = ?", [username]);
 
-  utils.encryptPassword(password);
-  console.log("@@@@@@@@@@@@@@@@@ pw >>>>>>>>>>>>>>>>>>", password);
-  console.log(
-    "@@@@@@@@@@@@@ user[0][0].password >>>>>>>>>>>>>>",
-    user[0][0].password
-  );
-
   if (user[0].length) {
     // check if password is correct
     if (!(await bcrypt.compareSync(password, user[0][0].password))) {
@@ -692,6 +685,7 @@ app.post(
   }
 );
 
-app.listen(8001, () => {
-  console.log(`Server is running on port 8001.`);
+//use 8002 because 8001 is used by webhook
+app.listen(8002, () => {
+  console.log(`Server is running on port 8002.`);
 });
