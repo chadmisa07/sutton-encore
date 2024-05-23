@@ -39,11 +39,7 @@ function getNextDeliveryDate(periodEnd) {
 }
 
 async function encryptPassword(password) {
-  const encryptedPassword = await bcrypt.hash(
-    password + process.env.PASSWORD_SECRET,
-    10
-  );
-
+  const encryptedPassword = await bcrypt.hash(password, 10);
   return encryptedPassword;
 }
 
@@ -64,4 +60,5 @@ module.exports = {
   getStartDay,
   getNextDeliveryDate,
   saveMessage,
+  encryptPassword,
 };

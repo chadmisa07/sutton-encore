@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Alert from "../Alert";
-import { Button, Checkbox, FormControlLabel } from "@mui/material";
-import { sendGetRequest, sendPostRequest } from "../../utils";
+import { Button } from "@mui/material";
+import { sendPostRequest } from "../../utils";
 
 const DEFAULT_STATE = { route: "0", message: "", isUpdateStatus: false };
 

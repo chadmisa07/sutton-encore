@@ -125,6 +125,13 @@ app.post("/login", async (req, res) => {
     .promise()
     .query("SELECT * FROM users where username = ?", [username]);
 
+  utils.encryptPassword(password);
+  console.log("@@@@@@@@@@@@@@@@@ pw >>>>>>>>>>>>>>>>>>", password);
+  console.log(
+    "@@@@@@@@@@@@@ user[0][0].password >>>>>>>>>>>>>>",
+    user[0][0].password
+  );
+
   if (user[0].length) {
     // check if password is correct
     if (!(await bcrypt.compareSync(password, user[0][0].password))) {

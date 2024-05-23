@@ -1,7 +1,5 @@
 import Customer from "./admin/Customer";
 import BroadcastSMS from "./admin/BroadcastSMS";
-import Route from "./admin/Route";
-import Person from "./admin/Person";
 
 export const modalStyle = {
   position: "absolute",
