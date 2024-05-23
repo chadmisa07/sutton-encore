@@ -71,10 +71,8 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://bagelsroundtop.com",
-      "https://www.bagelsroundtop.com",
-      "http://localhost:3001",
-      "http://127.0.0.1:3001",
+      "https://suttonencoremembres.ca/",
+      "https://www.suttonencoremembres.ca/",
     ],
   })
 );
