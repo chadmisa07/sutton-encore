@@ -342,7 +342,7 @@ app.get("/customers", verify, async (req, res) => {
       `SELECT subscribers.*, status.description AS status_desc, 
       CONCAT(subscribers.street_number, ' ', subscribers.street_name) AS address
       FROM subscribers AS subscribers
-      LEFT JOIN STATUS ON status.id = subscribers.status
+      LEFT JOIN status ON status.id = subscribers.status
       ORDER BY subscribers.id DESC`
     );
     res.json(data[0]);
