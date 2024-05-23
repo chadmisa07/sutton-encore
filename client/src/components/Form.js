@@ -82,29 +82,11 @@ const Form = ({
       <div>
         <form onSubmit={submitForm}>
           <div className="my-2">
-            <FormControl
-              fullWidth
-              className="bg-white rounded-md quantity-select-container"
-            >
-              <InputLabel name="quantity-label">Quantité de bagels</InputLabel>
-              <Select
-                labelId="quantity-label"
-                name="quantity"
-                label="Quantité de bagels"
-                onChange={handleChange}
-                value={quantity}
-              >
-                {PACKS.map((pack) => (
-                  <MenuItem
-                    key={pack.value}
-                    value={pack.value}
-                    className="text-[16px]"
-                  >
-                    {pack.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            <div className="my-2 flex w-full">
+              <span className="bg-white rounded-md font-bold w-full p-4">
+                {PACKS[0].label}
+              </span>
+            </div>
           </div>
           <div className="my-2">
             <TextField
@@ -161,20 +143,22 @@ const Form = ({
               value={postal_code}
               error={!isValidPostalCode}
               className="bg-white rounded-md"
-              helperText={
-                isValidPostalCode ? (
-                  ""
-                ) : (
-                  <p className="-ml-3">SVP entrez un code postal valide</p>
-                )
-              }
+              // helperText={
+              //   isValidPostalCode ? (
+              //     ""
+              //   ) : (
+              //     <p className="-ml-3 text-white">
+              //       SVP entrez un code postal valide
+              //     </p>
+              //   )
+              // }
             />
           </div>
 
           <div className="my-2 ">
-            <div className="flex justify-center w-full items-center">
+            <div className="flex justify-center w-full items-center border bg-gray-200 border-gray-300 rounded-md">
               <div className="max-w-11">
-                <div className="flex justify-center items-center border px-3 py-[15px] border-gray-300 rounded-l-[4px] bg-gray-200">
+                <div className="flex justify-center items-center  px-3 py-[15px]  ">
                   {process.env.REACT_APP_DEFAULT_AREA_CODE}
                 </div>
               </div>

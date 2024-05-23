@@ -423,6 +423,7 @@ app.post("/broadcast-sms", verify, async (req, res) => {
 app.post("/create-checkout-session", async (req, res) => {
   const { name, email, address, city, postal_code, apartment, phone_number } =
     req.body.user_info;
+
   try {
     const prices = await stripe.prices.list({
       lookup_keys: [`${req.body.lookup_key}`],
@@ -447,8 +448,6 @@ app.post("/create-checkout-session", async (req, res) => {
       phone: phone_number,
     });
 
-    const currentDate = new Date();
-
     const session = await stripe.checkout.sessions.create({
       customer: customer.id,
       billing_address_collection: "auto",
@@ -459,11 +458,6 @@ app.post("/create-checkout-session", async (req, res) => {
           quantity: 1,
         },
       ],
-      //Used to set the billing period to start on the next monday for date uniformity when billing the customers
-      subscription_data: {
-        billing_cycle_anchor: utils.getStartDay(currentDate.getDay()),
-        proration_behavior: "none",
-      },
       mode: "subscription",
       success_url: `${process.env.APP_DOMAIN}/success/{CHECKOUT_SESSION_ID}__${req.body.userId}`,
       cancel_url: `${process.env.APP_DOMAIN}`,
@@ -472,7 +466,7 @@ app.post("/create-checkout-session", async (req, res) => {
     if (session?.url) {
       res.json({ url: session.url, clientSecret: session.client_secret });
     }
-  } catch (err) {
+  } catch (error) {
     console.log("error >>>>>>>>>>>>", error);
     res.status(400).send({
       errMessage: DEFAULT_ERROR_MESSAGE,
@@ -524,12 +518,9 @@ app.post("/set-subscription", async (req, res) => {
     await db.promise().query("INSERT INTO subscribers SET ?", tempUser);
 
     const successMessage =
-      "Bagels Round Top vous souhaite la bienvenue! Votre abonnement à nos bons bagels frais est matinenant activé. À bientôt!";
+      "Félicitations! Vous êtes maintenant un membre VIP de Sutton Encore! Vanessa communiquera avec vous par texto pour les avantages VIP";
 
-    await sendMessage(
-      tempUser.phone_number,
-      "Félicitations! Vous êtes maintenant un membre VIP de Sutton Encore! Vanessa communiquera avec vous par texto pour les avantages VIP"
-    );
+    await sendMessage(tempUser.phone_number, successMessage);
 
     res.json({ subscriptionId: data.subscription, message: successMessage });
   } catch (error) {
@@ -550,7 +541,7 @@ app.post("/unsubscribe", async (req, res) => {
 
   if (subscriber[0].length === 0) {
     res.status(400).json({ errMessage: "Phone number is incorrect." });
-  } else {
+  } else if (subscriber[0].status === 1) {
     //SET subscriber status to unsubscribing and will go to inactive after responding unsubscribe to the text message
     await db
       .promise()
@@ -559,12 +550,13 @@ app.post("/unsubscribe", async (req, res) => {
         subscriber[0][0].id,
       ]);
 
-    const message =
-      "Vous êtes désabonné des livraisons de bagels.  Passez quand même nous voir à la fabrique! 1 Principale Sud à Sutton";
+    const message = "Vous êtes désabonné de Sutton Encore";
 
     await sendMessage(subscriber[0][0].phone_number, message);
 
     res.status(200).json({ message });
+  } else {
+    res.status(400).json({ errMessage: "Échec de la désinscription" });
   }
 });
 

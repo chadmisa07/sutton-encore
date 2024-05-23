@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import UnsubscribeModal from "../components/UnsubscribeModal";
-import Form from "../components/Form";
+import Form, { PACKS } from "../components/Form";
 import { sendPostRequest, formatPhoneNumber } from "../utils";
 
 const Subscribe = () => {
@@ -10,7 +10,7 @@ const Subscribe = () => {
     name: "",
     phone_number: "",
     postal_code: "",
-    quantity: "",
+    quantity: PACKS[0].value,
     email: "",
     address: "",
     number: "",
@@ -27,8 +27,6 @@ const Subscribe = () => {
     setShowUnsubscribeModal(value);
   };
 
-  console.log("@@@@@@@@@@@@@@@@@@@ inputs >>>>>>>>>>>>>>>", inputs);
-
   const { quantity } = inputs;
 
   const handleChange = (event) => {
@@ -37,11 +35,6 @@ const Subscribe = () => {
       name === "accept_sms_notification" || name === "accept_email_notification"
         ? event.target.checked
         : event.target.value;
-
-    console.log(
-      "@@@@@@@@@@@@@@@@ test >>>>>>>>>>>>",
-      /^\d{10}$/.test(Number(value))
-    );
 
     if (name === "phone_number") {
       if (value && !/^[0-9]+$/.test(value)) return;
@@ -54,11 +47,6 @@ const Subscribe = () => {
 
     setInputs((values) => ({ ...values, [name]: value }));
   };
-
-  console.log(
-    "@@@@@@@@@@@@@@@@@@ phoneNumberError >>>>>>>>>>>>>",
-    phoneNumberError
-  );
 
   const doCheckOut = async (userId) => {
     const res = await sendPostRequest("create-checkout-session", {
@@ -109,7 +97,7 @@ const Subscribe = () => {
       >
         <div>
           <div className="bagels__container bg-transparent lg:max-w-4xl xl:max-w-5xl md:max-w-3xl md:mx-auto md:w-1/2 w-full flex flex-col">
-            <div className="bagels-form lg:px-14 pb-6">
+            <div className="subscription-form lg:px-14 pb-6">
               <div className="flex items-center flex-col bg-white p-3 rounded-md call-to-action-container mb-7">
                 <h1 className="font-semibold text-xl sm:text-3xl text-center">
                   Devenez membre VIP de Sutton Encore, profitez des avantages et
