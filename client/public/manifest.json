@@ -1,19 +1,19 @@
 {
-  "short_name": "Bagels Round Top",
-  "name": "Bagels Round Top",
+  "short_name": "Sutton Encore",
+  "name": "Sutton Encore",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "logo_sutton_encore.webp",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "icon.png",
+      "src": "logo_sutton_encore.webp",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "icon.png",
+      "src": "logo_sutton_encore.webp",
       "type": "image/png",
       "sizes": "512x512"
     }
