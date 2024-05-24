@@ -29,7 +29,6 @@ const Form = ({
     postal_code,
     quantity,
     email,
-    route_id,
     accept_sms_notification,
     accept_email_notification,
     address,
@@ -196,7 +195,7 @@ const Form = ({
                       name="accept_sms_notification"
                     />
                   }
-                  label="J'accepte de recevoir des alertes de livraisons par texto"
+                  label="J'accepte de recevoir des alertes de spectacles et autres opportunités par texto"
                 />
               </div>
               <div className="mb-4 bg-white rounded-md p-1">

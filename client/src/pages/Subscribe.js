@@ -90,7 +90,7 @@ const Subscribe = () => {
       ) : null}
 
       <div
-        className="relative overflow-y-auto p-10 bg-[#232323] min-h-screen flex justify-center flex-col bg-contain sm:bg-cover bg-repeat sm:bg-no-repeat"
+        className="relative overflow-y-auto p-10 pb-0 bg-[#232323] min-h-screen flex justify-center flex-col bg-contain sm:bg-cover bg-repeat sm:bg-no-repeat"
         style={{
           backgroundImage: "url('/crowd_bg.jpg')",
         }}
@@ -127,6 +127,10 @@ const Subscribe = () => {
                   ?
                 </span>
               </div>
+            </div>
+            <div className="flex justify-center text-white mt-4 pb-4">
+              Ce site a été offert à Sutton Encore, gracieuseté de Bagels Round
+              Top
             </div>
           </div>
         </div>
