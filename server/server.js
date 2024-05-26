@@ -71,8 +71,8 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://suttonencoremembres.ca",
-      "https://www.suttonencoremembres.ca",
+      "https://suttonencoremembres.ca/",
+      "https://www.suttonencoremembres.ca/",
     ],
   })
 );
