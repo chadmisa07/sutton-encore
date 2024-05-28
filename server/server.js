@@ -364,14 +364,14 @@ app.post("/create-checkout-session", async (req, res) => {
     });
 
     //FOR TESTING PURPOSES ONLY AND MUST BE REMOVED
-    const testClock = await stripe.testHelpers.testClocks.create({
-      frozen_time: Math.floor(new Date().getTime() / 1000),
-    });
+    // const testClock = await stripe.testHelpers.testClocks.create({
+    //   frozen_time: Math.floor(new Date().getTime() / 1000),
+    // });
 
     const customer = await stripe.customers.create({
       name,
       email,
-      test_clock: testClock.id,
+      // test_clock: testClock.id,
       address: {
         line1: address,
         line2: apartment,
