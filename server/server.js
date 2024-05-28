@@ -451,7 +451,7 @@ app.post("/set-subscription", async (req, res) => {
     await db.promise().query("INSERT INTO subscribers SET ?", tempUser);
 
     const successMessage =
-      "Félicitations! Vous êtes maintenant un membre VIP de Sutton Encore! Vanessa communiquera avec vous par texto pour les avantages VIP";
+      "Félicitations! Vous êtes maintenant membre du Club Sutton Encore! Vanessa communiquera avec vous par texto pour les avantages VIP";
 
     await sendMessage(tempUser.phone_number, successMessage);
 

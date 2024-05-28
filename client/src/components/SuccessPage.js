@@ -11,7 +11,7 @@ function SuccessPage() {
           Vous vous êtes abonné avec succès!
         </h1>
         <p className="text-lg mb-4 text-center">
-          Félicitations! Vous êtes maintenant un membre VIP de Sutton Encore!
+          Félicitations! Vous êtes maintenant membre du Club Sutton Encore!
           Vanessa communiquera avec vous par texto pour les avantages VIP
         </p>
         <button

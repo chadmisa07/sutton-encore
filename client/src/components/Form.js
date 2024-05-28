@@ -5,7 +5,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 export const PACKS = [
   {
     value: "membre_vip_9_mois",
-    label: "Membre VIP 9$/mois",
+    label: "Membre 9$/mois",
   },
 ];
 

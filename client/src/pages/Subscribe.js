@@ -100,8 +100,8 @@ const Subscribe = () => {
             <div className="subscription-form lg:px-14 pb-6">
               <div className="flex items-center flex-col bg-white p-3 rounded-md call-to-action-container mb-7">
                 <h1 className="font-semibold text-xl sm:text-3xl text-center">
-                  Devenez membre VIP de Sutton Encore, profitez des avantages et
-                  appuyez votre salle!
+                  Devenez membre du Club Sutton Encore, profitez des avantages
+                  et appuyez votre salle!
                 </h1>
               </div>
 
