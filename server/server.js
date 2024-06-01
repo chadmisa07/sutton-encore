@@ -440,22 +440,28 @@ app.post("/set-subscription", async (req, res) => {
 
     const tempUser = tempQuery[0][0];
 
-    await db
-      .promise()
-      .query("DELETE FROM temp_subscribers WHERE id = ?", [tempUser.id]);
+    if (tempUser) {
+      await db
+        .promise()
+        .query("DELETE FROM temp_subscribers WHERE id = ?", [tempUser.id]);
 
-    delete tempUser.id;
-    tempUser.subscription_id = data.subscription;
-    tempUser.customer_id = data.customer;
+      delete tempUser.id;
+      tempUser.subscription_id = data.subscription;
+      tempUser.customer_id = data.customer;
 
-    await db.promise().query("INSERT INTO subscribers SET ?", tempUser);
+      await db.promise().query("INSERT INTO subscribers SET ?", tempUser);
 
-    const successMessage =
-      "Félicitations! Vous êtes maintenant membre du Club Sutton Encore! Vanessa communiquera avec vous par texto pour les avantages VIP";
+      const successMessage =
+        "Félicitations! Vous êtes maintenant membre du Club Sutton Encore! Vanessa communiquera avec vous par texto pour les avantages VIP";
 
-    await sendMessage(tempUser.phone_number, successMessage);
+      await sendMessage(tempUser.phone_number, successMessage);
 
-    res.json({ subscriptionId: data.subscription, message: successMessage });
+      res.json({ subscriptionId: data.subscription, message: successMessage });
+    } else {
+      res.status(400).send({
+        errMessage: DEFAULT_ERROR_MESSAGE,
+      });
+    }
   } catch (error) {
     console.log("error >>>>>>>>>>>>", error);
     res.status(400).send({
